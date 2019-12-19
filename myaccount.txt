@@ -1,0 +1,144 @@
+package jm;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.*;
+public class myaccount {
+
+	private JFrame frame;
+	public static String IDnumber;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					myaccount window = new myaccount();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public myaccount() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		Connection conn=Sign.getConn();
+		frame = new JFrame();
+		frame.setTitle("\u4E2A\u4EBA\u4FE1\u606F");
+		frame.setBounds(100, 100, 658, 566);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setBackground(new Color(255,245,238));
+		
+		JLabel label = new JLabel("\u7528\u6237\u540D");
+		label.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label.setBounds(74, 94, 83, 33);
+		frame.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel("\u59D3\u540D");
+		label_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label_1.setBounds(74, 154, 83, 33);
+		frame.getContentPane().add(label_1);
+		
+		JLabel label_2 = new JLabel("\u8054\u7CFB\u65B9\u5F0F");
+		label_2.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label_2.setBounds(74, 212, 83, 33);
+		frame.getContentPane().add(label_2);
+		
+		JLabel label_3 = new JLabel("\u8EAB\u4EFD\u8BC1\u53F7");
+		label_3.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label_3.setBounds(74, 273, 83, 33);
+		frame.getContentPane().add(label_3);
+		
+		JLabel label_4 = new JLabel("\u65C5\u5BA2\u7C7B\u578B");
+		label_4.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label_4.setBounds(74, 336, 83, 33);
+		frame.getContentPane().add(label_4);
+		
+		RButton button = new RButton(0,"\u8FD4\u56DE");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.setVisible(false);
+				Mymain.main(null);
+			}
+		});
+		button.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		button.setBounds(448, 424, 93, 33);
+		frame.getContentPane().add(button);
+		
+		JLabel account = new JLabel("\u7528\u6237\u540D");
+		account.setFont(new Font("Î¢ÈíÑÅºÚ Light", Font.PLAIN, 20));
+		account.setBounds(188, 96, 244, 26);
+		frame.getContentPane().add(account);	 
+		account.setText(Dljm.ACCOUNT);
+		
+		JLabel name = new JLabel("\u7528\u6237\u540D");
+		name.setFont(new Font("Î¢ÈíÑÅºÚ Light", Font.PLAIN, 20));
+		name.setBounds(188, 156, 256, 26);
+		frame.getContentPane().add(name);
+		
+		
+		JLabel phonenumber = new JLabel("\u7528\u6237\u540D");
+		phonenumber.setFont(new Font("Î¢ÈíÑÅºÚ Light", Font.PLAIN, 20));
+		phonenumber.setBounds(188, 214, 244, 26);
+		frame.getContentPane().add(phonenumber);
+		phonenumber.setText("13523943012");
+		
+		JLabel ID = new JLabel("\u7528\u6237\u540D");
+		ID.setFont(new Font("Î¢ÈíÑÅºÚ Light", Font.PLAIN, 20));
+		ID.setBounds(188, 275, 313, 26);
+		frame.getContentPane().add(ID);
+		//ID.setText("473124XXXXXXXXXXXXX");
+		
+		JLabel type = new JLabel("\u7528\u6237\u540D");
+		type.setFont(new Font("Î¢ÈíÑÅºÚ Light", Font.PLAIN, 20));
+		type.setBounds(188, 338, 178, 26);
+		frame.getContentPane().add(type);
+		type.setText("Ñ§Éú");
+		
+		 String sql = "select * from user where account=?";
+		 PreparedStatement pstmt;
+		 try {
+			
+			pstmt = (PreparedStatement)conn.prepareStatement(sql);
+			pstmt.setString(1,Dljm.ACCOUNT);
+			ResultSet results=pstmt.executeQuery();
+			while(results.next())
+			{
+				name.setText(results.getString(1));
+			phonenumber.setText(results.getString(3));
+			ID.setText(results.getString(2));
+			IDnumber=results.getString(2);
+			type.setText(results.getString(4));
+			}
+			pstmt.close();
+			conn.close();
+			
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+}

@@ -1,0 +1,120 @@
+package jm;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.SystemColor;
+
+public class FindTicket {
+
+	private JFrame frame;
+	private JTextField start;
+	private JTextField reach;
+	private JTextField time;
+	public static String Start;
+	public static String Reach;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FindTicket window = new FindTicket();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public FindTicket() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setTitle("\u8F66\u7968\u67E5\u8BE2");
+		frame.setBounds(100, 100, 730, 613);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setBackground(new Color(255,245,238));
+
+		
+		JLabel label = new JLabel("\u51FA\u53D1\u5730");
+		label.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label.setBounds(165, 125, 93, 37);
+		frame.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel("\u76EE\u7684\u5730");
+		label_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label_1.setBounds(165, 208, 93, 37);
+		frame.getContentPane().add(label_1);
+		
+		JLabel label_2 = new JLabel("\u51FA\u53D1\u65E5\u671F");
+		label_2.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label_2.setBounds(165, 292, 93, 37);
+		frame.getContentPane().add(label_2);
+		
+		start = new JTextField();
+		start.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		start.setForeground(new Color(0, 0, 0));
+		start.setBounds(315, 130, 188, 32);
+		frame.getContentPane().add(start);
+		start.setColumns(10);
+		
+		reach = new JTextField();
+		reach.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		reach.setColumns(10);
+		reach.setBounds(315, 213, 188, 32);
+		frame.getContentPane().add(reach);
+		
+		time = new JTextField();
+		time.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		time.setBounds(315, 297, 188, 32);
+		frame.getContentPane().add(time);
+		time.setColumns(10);
+		
+		
+		RButton button = new RButton(0,"\u67E5\u8BE2");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Start=start.getText();
+				Reach=reach.getText();
+				Ticket.main(null);
+				frame.setVisible(false);
+			}
+		});
+		button.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		button.setBounds(165, 413, 101, 37);		
+		frame.getContentPane().add(button);
+		
+		RButton button_1 = new RButton(0,"\u8FD4\u56DE");
+		button_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Mymain.main(null);
+				frame.setVisible(false);
+			}
+		});
+		button_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		button_1.setBounds(429, 413, 101, 37);
+		frame.getContentPane().add(button_1);
+	}
+}

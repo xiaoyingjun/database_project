@@ -1,0 +1,249 @@
+package jm;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JPasswordField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Font;
+import java.sql.*;
+
+public class Sign {
+
+	private JFrame frame;
+	private JTextField a;
+	private JTextField c;
+	private JTextField d;
+	private JTextField g;
+	private JPasswordField b;
+	private JTextField h;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Sign window = new Sign();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Sign() {
+		initialize();
+	}
+	public static Connection getConn() {
+
+		String driver = "com.mysql.jdbc.Driver";
+	
+		String url = "jdbc:mysql://127.0.0.1:3306/dbsclab2018?user=root&password=&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false";
+
+		
+		String user = "myuser"; 
+		
+		String password = "dbclass";
+		Connection conn=null;
+		try {
+			Class.forName(driver);
+			System.out.println("«˝∂Øº”‘ÿ≥…π¶£°");
+
+			 conn = DriverManager.getConnection(url, user, password);
+
+			if (!conn.isClosed())
+				System.out.println("≥…π¶¡¨Ω” ˝æ›ø‚!");
+
+			
+		} catch (ClassNotFoundException e) {
+
+			System.out.println("Sorry,can`t find the Driver!");
+			e.printStackTrace();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return conn;
+	}
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	@SuppressWarnings("unchecked")
+	private void initialize() {
+		Connection conn=getConn();
+		frame = new JFrame();
+		frame.setTitle("\u6CE8\u518C\u754C\u9762");
+		frame.getContentPane().setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		frame.setBounds(100, 100, 725, 599);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setBackground(new Color(255,245,238));
+		
+		JLabel label = new JLabel("\u7528\u6237\u540D");
+		label.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		label.setBounds(108, 105, 81, 21);
+		frame.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel("\u5BC6\u7801");
+		label_1.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		label_1.setBounds(108, 160, 81, 21);
+		frame.getContentPane().add(label_1);
+		
+		JLabel label_2 = new JLabel("\u8EAB\u4EFD\u8BC1\u53F7");
+		label_2.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		label_2.setBounds(108, 216, 81, 21);
+		frame.getContentPane().add(label_2);
+		
+		JLabel label_3 = new JLabel("\u8054\u7CFB\u65B9\u5F0F");
+		label_3.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		label_3.setBounds(108, 274, 81, 21);
+		frame.getContentPane().add(label_3);
+		
+		JLabel label_4 = new JLabel("\u65C5\u5BA2\u7C7B\u578B");
+		label_4.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		label_4.setBounds(108, 336, 81, 21);
+		frame.getContentPane().add(label_4);
+		
+		JLabel label_5 = new JLabel("\u4F18\u60E0\u5361\u53F7");
+		label_5.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		label_5.setBounds(108, 398, 81, 21);
+		frame.getContentPane().add(label_5);
+		
+		a = new JTextField();
+		a.setBounds(201, 102, 206, 27);
+		frame.getContentPane().add(a);
+		a.setColumns(10);
+		
+		c = new JTextField();
+		c.setColumns(10);
+		c.setBounds(201, 213, 206, 27);
+		frame.getContentPane().add(c);
+		
+		d = new JTextField();
+		d.setToolTipText("");
+		d.setColumns(10);
+		d.setBounds(201, 271, 206, 27);
+		frame.getContentPane().add(d);
+		
+		g = new JTextField();
+		g.setToolTipText("");
+		g.setColumns(10);
+		g.setBounds(201, 395, 206, 27);
+		frame.getContentPane().add(g);
+		
+		JComboBox ef = new JComboBox();
+		ef.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		ef.setModel(new DefaultComboBoxModel<Object>(new String[] {"\u5B66\u751F", "\u6210\u4EBA", "\u519B\u4EBA", "\u8001\u4EBA", "\u6B8B\u75BE\u4EBA"}));
+		ef.setToolTipText("");
+		ef.setBounds(201, 333, 206, 27);
+		frame.getContentPane().add(ef);
+		
+		b = new JPasswordField();
+		b.setBounds(201, 157, 206, 27);
+		frame.getContentPane().add(b);
+		
+		
+		JLabel name = new JLabel("\u59D3\u540D");
+		name.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		name.setBounds(108, 51, 81, 21);
+		frame.getContentPane().add(name);
+		
+		h = new JTextField();
+		h.setBounds(201, 49, 206, 27);
+		frame.getContentPane().add(h);
+		h.setColumns(10);
+		
+		RButton button = new RButton(0,"\u6CE8\u518C");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String str=new String();
+				str=String.valueOf(b.getPassword());
+				String str1=new String();
+				str1=String.valueOf(ef.getSelectedItem());
+				 String sql = "insert into user (name,ID,phone,type,account,password,cardID) values(?,?,?,?,?,?,?)";
+				 
+				 PreparedStatement pstmt;
+				 try {
+					pstmt = (PreparedStatement)conn.prepareStatement(sql);
+					pstmt.setString(1, h.getText());
+					pstmt.setString(2, c.getText());
+					pstmt.setString(3, d.getText());
+					pstmt.setString(4, str1);
+					pstmt.setString(5, a.getText());
+					pstmt.setString(6,str);
+					pstmt.setString(7, g.getText());
+					pstmt.executeUpdate();
+					 pstmt.close();
+				     
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				 try {
+					PreparedStatement pstmt2=conn.prepareStatement("insert into discount(ID,type,reduce,disnumber)values(?,?,?,?)");
+					pstmt2.setString(1, c.getText());
+					pstmt2.setString(2, str1);
+					if(str1=="æ¸»À"||str1=="¿œ»À")
+					{
+						pstmt2.setFloat(3, (float) 0.65);
+					}
+					if(str1=="≤–º≤»À")
+					{
+						pstmt2.setFloat(3, (float) 0.54);
+					}
+					if(str1=="—ß…˙")
+					{
+						pstmt2.setFloat(3, (float) 0.73);
+					}
+					if(str1=="≥…»À")
+					{
+						pstmt2.setFloat(3, (float) 1);
+					}
+					pstmt2.setString(4, g.getText());
+					 pstmt2.executeUpdate();
+					 pstmt2.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				frame.setVisible(false);
+			}
+				
+		});
+		button.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		button.setBounds(512, 169, 86, 41);
+		frame.getContentPane().add(button);
+		
+		RButton button_1 = new RButton(0,"\u8FD4\u56DE");
+		button_1.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 20));
+		button_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.setVisible(false);
+			}
+		});
+		button_1.setBounds(512, 294, 86, 41);
+		frame.getContentPane().add(button_1);
+
+	}
+}

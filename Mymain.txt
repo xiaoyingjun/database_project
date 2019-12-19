@@ -1,0 +1,106 @@
+package jm;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Font;
+import java.awt.SystemColor;
+
+public class Mymain {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Mymain window = new Mymain();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Mymain() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		
+		frame = new JFrame();
+		frame.setTitle("\u4E3B\u754C\u9762");
+		frame.setBounds(100, 100, 744, 673);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setBackground(new Color(255,245,238));
+		RButton button = new RButton(0,"\u8F66\u7968\u9884\u5B9A");
+		//button.setFont(new Font("ÎÄÈªæäÕýºÚ", Font.BOLD, 20));
+		//button.setBackground(new Color(250,128,114));
+		//button.setForeground(new Color(41,36,33));
+		button.setBorder(BorderFactory.createRaisedBevelBorder());
+		//button.setBorder(BorderFactory.createLineBorder(new Color(41,36,33)));
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				jm.FindTicket findticket=new jm.FindTicket();
+				findticket.main(null);
+				frame.setVisible(false);
+			}
+		});
+		button.setBounds(110, 79, 129, 55);
+		frame.getContentPane().add(button);
+		
+		RButton button_1 = new RButton(0,"\u6211\u7684\u4FE1\u606F");
+		button_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				myaccount.main(null);
+				frame.setVisible(false);
+			}
+		});
+		button_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 20));
+		button_1.setBounds(110, 213, 129, 55);
+		frame.getContentPane().add(button_1);
+		
+		RButton button_2 = new RButton(0,"\u6211\u7684\u8BA2\u7968");
+		button_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Myticket.main(null);
+				frame.setVisible(false);
+			}
+		});
+		button_2.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 20));
+		button_2.setBounds(110, 347, 129, 55);
+		frame.getContentPane().add(button_2);
+		
+		RButton button_3 = new RButton(0,"\u5173\u4E8E\u6211\u4EEC");
+		button_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Aboutus.main(null);
+				frame.setVisible(false);
+			}
+		});
+		button_3.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 20));
+		button_3.setBounds(110, 481, 129, 55);
+		frame.getContentPane().add(button_3);
+	}
+
+}

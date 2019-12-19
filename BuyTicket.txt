@@ -1,0 +1,153 @@
+package jm;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class BuyTicket {
+
+	private JFrame New;
+	public static float FinalPri;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					BuyTicket window = new BuyTicket();
+					window.New.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public BuyTicket() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		New = new JFrame();
+		New.setTitle("\u652F\u4ED8\u754C\u9762");
+		New.setBounds(100, 100, 563, 427);
+		New.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		New.getContentPane().setBackground(new Color(255,245,238));
+		New.getContentPane().setLayout(null);
+		
+		JLabel label = new JLabel("\u786E\u8BA4\u8BA2\u5355");
+		label.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 21));
+		label.setBounds(216, 47, 139, 29);
+		New.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel("\u8F66\u6B21\uFF1A");
+		label_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label_1.setBounds(163, 127, 81, 21);
+		New.getContentPane().add(label_1);
+		
+		JLabel label_2 = new JLabel("\u7968\u4EF7\uFF1A");
+		label_2.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		label_2.setBounds(163, 201, 81, 21);
+		New.getContentPane().add(label_2);
+		
+		RButton button = new RButton(0,"\u786E\u8BA4");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Connection conn=Sign.getConn();
+				
+				String sql="insert into orderinfo(ID,trnumber,depstation,destinantion,deptime,reachtime,finalprice,seat)values(?,?,?,?,?,?,?,?)";
+				PreparedStatement pstmt;
+				try {
+					pstmt=(PreparedStatement)conn.prepareStatement(sql);
+					pstmt.setString(1, myaccount.IDnumber);
+					pstmt.setString(2, Ticket.Trnum);
+					pstmt.setString(3, FindTicket.Start);
+					pstmt.setString(4, FindTicket.Reach);
+					pstmt.setString(5, Ticket.Deptime);
+					pstmt.setString(6, Ticket.Reachtime);
+					pstmt.setFloat(7, FinalPri);
+					pstmt.setInt(8, Ticket.Seatnum);
+					pstmt.executeUpdate();
+					pstmt.close();
+					PreparedStatement pstmt2;
+					pstmt2=conn.prepareStatement("update train set seatnumber=seatnumber-1 where trnumber=?");
+					pstmt2.setString(1, Ticket.Trnum);
+					pstmt2.executeUpdate();
+					pstmt2.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				New.setVisible(false);
+				Success.main(null);
+			}
+		});
+		//button.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		button.setBounds(86, 289, 102, 37);
+		New.getContentPane().add(button);
+		
+		RButton button_1 = new RButton(0,"\u53D6\u6D88");
+		button_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				New.setVisible(false);
+				Ticket.main(null);
+			}
+		});
+	//	button_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		button_1.setBounds(319, 289, 102, 37);
+		New.getContentPane().add(button_1);
+		
+		JLabel Trnumber = new JLabel("New label");
+		Trnumber.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		Trnumber.setBounds(267, 127, 123, 21);
+		New.getContentPane().add(Trnumber);
+		Trnumber.setText(Ticket.Trnum);
+		
+		JLabel Price = new JLabel("New label");
+		Price.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 20));
+		Price.setBounds(267, 202, 123, 21);
+		New.getContentPane().add(Price);
+			Connection conn=Sign.getConn();
+			PreparedStatement pstmt3;
+				try {
+					pstmt3=conn.prepareStatement("select reduce from discount where ID=?");
+					pstmt3.setString(1, myaccount.IDnumber);
+					ResultSet result=pstmt3.executeQuery();
+					System.out.println(Double.toString(3.24));
+					while(result.next())
+					{
+						FinalPri=Ticket.Pri*result.getFloat(1);
+						Price.setText(Double.toString(FinalPri));
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+			}
+			//discount to realize
+	}
+}

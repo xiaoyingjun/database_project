@@ -1,0 +1,84 @@
+SET SQL_SAFE_UPDATES = 0;
+SET FOREIGN_KEY_CHECKS=0;
+drop table if exists user;
+drop table if exists train;
+drop table if exists orderinfo;
+drop table if exists discount;
+create table user
+(
+name varchar(20),
+ID varchar(18),
+phone varchar(20),
+type varchar(20),
+account varchar(20),
+password varchar(20),
+cardID varchar(20),
+primary key(ID)
+);
+create table train
+(
+trnumber varchar(20),
+origin varchar(20),
+terminal varchar(20),
+route varchar(100),
+sttime time,
+arrtime time,
+price int,
+seatnumber int,
+primary key(trnumber)
+);
+create table orderinfo
+(
+ornumber int NOT NULL AUTO_INCREMENT,
+ID char(18),
+trnumber varchar(20),
+depstation varchar(20),
+destinantion varchar(20),
+deptime varchar(20),
+reachtime varchar(20),
+finalprice int,
+seat int,
+primary key (ornumber)
+)auto_increment=1;
+create table discount
+(
+ID char(18),
+type varchar(20),
+reduce float,
+disnumber varchar(20),
+primary key(disnumber)
+);
+alter table `orderinfo` add constraint `orderinfo_fk1`
+   foreign key (`ID`) references `user`(`ID`)
+   on delete set null;   
+alter table `orderinfo` add constraint `orderinfo_fk2`
+   foreign key (`trnumber`) references `train`(`trnumber`)
+   on delete set null; 
+alter table `discount` add constraint `discount_fk1`
+   foreign key (`ID`) references `user`(`ID`)
+   on delete set null; 
+insert into train(trnumber,origin,terminal,route,sttime,arrtime,price,seatnumber) value('K1235','上海','昆明','上海09:00杭州09:31南昌10:37长沙13:52贵阳15:22昆明17:47','09:00','17:47',1000,80);
+insert into train(trnumber,origin,terminal,route,sttime,arrtime,price,seatnumber) value('K1612','哈尔滨','太原','哈尔滨03:30沈阳04:12天津05:16北京07:00呼和浩特10:15太原12:00','03:00','12:00',400,200);
+insert into train(trnumber,origin,terminal,route,sttime,arrtime,price,seatnumber) value('K666','上海','昆明','上海05:22杭州06:41南昌08:22长沙11:47贵阳13:40昆明15:22','05:22','15:22',927,110);
+insert into train(trnumber,origin,terminal,route,sttime,arrtime,price,seatnumber) value('K674','上海','昆明','上海09:44杭州10:47南昌13:22长沙15:34贵阳17:29昆明20:22','05:22','15:22',986,40);
+insert into train(trnumber,origin,terminal,route,sttime,arrtime,price,seatnumber) value('K1433','哈尔滨','太原','哈尔滨05:34沈阳09:11天津12:39北京14:52呼和浩特16:33太原18:47','03:00','12:00',486,190);
+DELIMITER $$
+ create trigger trainseatnum before update on train
+ for each row
+ begin
+ declare MESSAGE_TEXT varchar(200);
+ if NEW.seatnumber<0 then
+ signal sqlstate 'AL001' set message_text='the seat is empty';
+ end if;
+ end$$
+ DELIMITER ;
+ DELIMITER $$
+ create trigger orderseatnum before insert on orderinfo
+ for each row
+ begin
+ declare MESSAGE_TEXT varchar(200);
+ if NEW.seat<0 then
+ signal sqlstate 'AL001' set message_text='the seat is empty';
+ end if;
+ end$$
+ DELIMITER ;

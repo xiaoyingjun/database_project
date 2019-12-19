@@ -1,0 +1,68 @@
+package jm;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class Refund {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Refund window = new Refund();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Refund() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setBackground(new Color(255,245,238));
+		
+		JLabel label = new JLabel("\u9000\u7968\u6210\u529F");
+		label.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 22));
+		label.setBounds(166, 67, 130, 30);
+		frame.getContentPane().add(label);
+		
+		RButton button = new RButton(0,"\u8FD4\u56DE\u4E3B\u83DC\u5355");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.setVisible(false);
+				Mymain.main(null);
+			}
+		});
+		button.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 19));
+		button.setBounds(137, 148, 149, 29);
+		frame.getContentPane().add(button);
+	}
+
+}
+
